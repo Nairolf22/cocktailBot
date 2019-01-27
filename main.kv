@@ -1,0 +1,112 @@
+#1024x600
+
+<BevSizeToggle@ToggleButton>:
+    text: "M"
+    group: "bevSize"
+    background_color: (0,0,0,1) if self.state == 'normal' else (0,1,0,1)
+
+
+<BevSizeImage@Image>:
+    size: self.parent.width - 10, self.parent.height - 10
+    x: self.parent.x + 5
+    y: self.parent.y + 5
+    allow_stretch: True
+
+<BeverageButton@Button>:
+    bevText: "Getränk"
+
+    width: 50
+    text: self.bevText
+    color: 0.8,0.8,0.8,1
+    background_color: 0.5,0.5,0,0.8
+    font_size: 40
+
+<MainMenu>:
+    numCols: 2
+
+    name: "main"
+
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: "cdata/bg.png"
+
+    FloatLayout:
+        Widget:
+            id: fill_full
+            size_hint: None, None
+            size: root.width/10, root.width/10/124*189*0.78
+            pos: 8*root.width/10, root.height/10+self.height*0.079
+            canvas:
+                Color:
+                    rgba: 1, 1, 1, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+        Widget:
+            id: cocktail_filling
+            size_hint: None, None
+            size: fill_full.width, 0
+            pos: fill_full.pos
+            canvas:
+                Color:
+                    rgba: 0, 0.8, 0, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+        Widget:
+            size_hint: None, None
+            size: root.width/10, root.width/10/124*189
+            pos: 8*root.width/10, root.height/10
+            canvas:
+                Color:
+                    rgba: 1, 1, 1, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+                    source: "cdata/glas.png"
+
+    Widget:
+        GridLayout:
+
+            id: bevGrid
+            cols: root.numCols
+            pos: root.width/20, root.height/10
+            size: 7*root.width/10, 17*root.height/20
+            spacing: 20
+
+            BeverageButton:
+                bevText: "zurück"
+                on_release: root.manager.current = 'start'
+
+    Widget:
+        Label:
+            id: mainUserLabel
+            pos: root.width/10, 0
+            height: root.height/10
+            text: "Text für den Benutzer"
+
+    Widget:
+        GridLayout:
+            cols: 1
+            pos: 8*root.width/10, 9*root.height/20
+            size: 622/945*3*root.height/10, root.height/2
+            spacing: 10
+
+            BevSizeToggle:
+                id: mainBevSizeToggleL
+                BevSizeImage:
+                    source: "cdata/L.png"
+            BevSizeToggle:
+                id: mainBevSizeToggleM
+                state: "down"
+                BevSizeImage:
+                    source: "cdata/M.png"
+            BevSizeToggle:
+                id: mainBevSizeToggleS
+                BevSizeImage:
+                    source: "cdata/S.png"
+
+
+
